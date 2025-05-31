@@ -1,0 +1,5 @@
+import coliseo.*
+
+describe "group of tests for Coliseo" {
+
+}
