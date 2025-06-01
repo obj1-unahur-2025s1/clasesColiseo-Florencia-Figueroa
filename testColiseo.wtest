@@ -1,4 +1,7 @@
-S
+import Armas.*
+import coliseo.*
+import Gladiadores.*
+
 
 describe "group of tests for Coliseo" {
 

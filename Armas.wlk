@@ -17,7 +17,7 @@ class ArmaContundente {
 
 //ESCUDOS
 object casco {
-    method puntos() = 10
+    method puntos(unLuchador) = 10
 }
 
 object escudo {

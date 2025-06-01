@@ -1,4 +1,4 @@
-//GLADIADORES
+//GLADIADORES Y GRUPOS
 
 class GladiadorMirmillon{
     var vida = 100
@@ -9,8 +9,12 @@ class GladiadorMirmillon{
 
     method vida() = vida
 
+    method fuerza() = fuerza
+
+    method puedePelear() = vida > 1
+
     method dañoRecibido(daño)
-        {vida = vida - daño}
+        {vida = (vida - daño).max(0)}
 
     method armaAUtilizar(unArma)
         {arma = unArma}
@@ -25,8 +29,16 @@ class GladiadorMirmillon{
         self.atacarA(unGladiador)}
   
     method defenza() = destreza + armadura.puntos()
-  
+
+    method recibirCuracion(){
+        vida = (vida + 100).min(100)}
+
+    method crearGrupo(unGladiador){
+        const grupo = new Grupo 
+        (nombre = "Mirmillolandia", integrantes = [self, unGladiador] ,cantidadDePeleas = 0)
+    }
 }
+
 
 class GladiadorDimachaerus{
     var vida = 100
@@ -36,8 +48,12 @@ class GladiadorDimachaerus{
 
     method vida() = vida
 
+    method fuerza() = fuerza 
+
+    method puedePelear() = vida > 1
+
     method dañoRecibido(daño)
-        {vida = vida - daño}
+        {vida = (vida - daño).max(0)}
 
     method armaAUtilizar(unArma)
         {armas.add(unArma)}
@@ -51,4 +67,35 @@ class GladiadorDimachaerus{
 
     method contraatacar(unGladiador){
         self.atacarA(unGladiador)}
+    
+    method recibirCuracion(){
+        vida = (vida + 100).min(100)}
+
+    method crearGrupo(unGladiador){
+        const grupo = new Grupo 
+        (nombre = "D- " + (self.poderDeAtaque() + unGladiador.poderDeAtaque()).toString(), integrantes = [self, unGladiador] ,cantidadDePeleas = 0)
+    }
+  }
+
+
+class Grupo {
+    const nombre
+    const integrantes = #{}
+    var cantidadDePeleas
+
+    method agregarGladiador(unGladiador){
+        integrantes.add(unGladiador)}
+
+    method quitarGladiador(unGladiador){
+        integrantes.remove(unGladiador)}
+
+    method combatirCon(unGladiadorOMuchos){
+        integrantes.forEach({i, u => i.atacarA(u)})
+    }
+    method gladiadoresEnCondiciones() = 
+        integrantes.filter({i => i.puedePelear()})
+
+    method campeon() = self.gladiadoresEnCondiciones().max({i => i.fuerza()})    
 }
+
+//fijarme si es necesario 2 metodos para combatir 
